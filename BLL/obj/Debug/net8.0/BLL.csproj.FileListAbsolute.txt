@@ -1,0 +1,16 @@
+D:\Project\TestFishingTicket\BLL\bin\Debug\net8.0\BLL.deps.json
+D:\Project\TestFishingTicket\BLL\bin\Debug\net8.0\BLL.dll
+D:\Project\TestFishingTicket\BLL\bin\Debug\net8.0\BLL.pdb
+D:\Project\TestFishingTicket\BLL\bin\Debug\net8.0\DAL.dll
+D:\Project\TestFishingTicket\BLL\bin\Debug\net8.0\DAL.pdb
+D:\Project\TestFishingTicket\BLL\obj\Debug\net8.0\BLL.csproj.AssemblyReference.cache
+D:\Project\TestFishingTicket\BLL\obj\Debug\net8.0\BLL.GeneratedMSBuildEditorConfig.editorconfig
+D:\Project\TestFishingTicket\BLL\obj\Debug\net8.0\BLL.AssemblyInfoInputs.cache
+D:\Project\TestFishingTicket\BLL\obj\Debug\net8.0\BLL.AssemblyInfo.cs
+D:\Project\TestFishingTicket\BLL\obj\Debug\net8.0\BLL.csproj.CoreCompileInputs.cache
+D:\Project\TestFishingTicket\BLL\obj\Debug\net8.0\BLL.sourcelink.json
+D:\Project\TestFishingTicket\BLL\obj\Debug\net8.0\BLL.csproj.CopyComplete
+D:\Project\TestFishingTicket\BLL\obj\Debug\net8.0\BLL.dll
+D:\Project\TestFishingTicket\BLL\obj\Debug\net8.0\refint\BLL.dll
+D:\Project\TestFishingTicket\BLL\obj\Debug\net8.0\BLL.pdb
+D:\Project\TestFishingTicket\BLL\obj\Debug\net8.0\ref\BLL.dll

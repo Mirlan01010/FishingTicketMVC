@@ -1,0 +1,59 @@
+﻿@model BLL.Models.WaterBodyModels.WaterBodyUpdateVM
+
+<form method="post" asp-action="Edit">
+    <input asp-for="@Model.WaterBodyResponse.Id" hidden />
+    <input asp-for="@Model.WaterBodyResponse.IsActive" hidden />
+
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-info pb-3">Редактировать Видов Билета</h2>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="@Model.WaterBodyResponse.Name">Название</label>
+
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="@Model.WaterBodyResponse.Name" class="form-control" />
+                        <span asp-validation-for="@Model.WaterBodyResponse.Name" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="form-group row pt-3">
+                    <div class="col-4">
+                        <label asp-for="@Model.WaterBodyResponse.RegionId"> Область</label>
+                    </div>
+                    <div class="col-8">
+                        <select asp-for="@Model.WaterBodyResponse.RegionId" asp-items="@Model.regionResponses" class="form-control">
+                            <option disabled selected>--Select Category-- </option>
+                        </select>
+                        <span asp-validation-for="@Model.WaterBodyResponse.RegionId" class="text-danger"></span>
+                    </div>
+
+                </div>
+                
+                <div class="form-group row pt-3">
+                    <div class="col-8 offset-4 row">
+
+                        <div class="col">
+                            <input type="submit" class="btn btn-success w-100" value="Обновить" />
+                        </div>
+                        <div class="col">
+                            <a asp-action="Index" class="btn btn-info w-100"><i class="fa-solid fa-right-from-bracket"></i>Назад</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                @* Keep this empty *@
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

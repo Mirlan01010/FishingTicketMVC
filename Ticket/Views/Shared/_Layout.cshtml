@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Ticket</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Ticket.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div class="bg-dark col-auto col-md-4 col-lg-3 min-vh-100 d-flex flex-column justify-content-between">
+                <div class="bg-dark p-2">
+                    <a href="" class="d-flex text-decoration-none mt-1 align-items-center text-white">
+                        <span class="fs-4 d-none d-sm-inline">SideMenu</span>
+                    </a>
+                    <ul class="nav nav-pills flex-column mt-4">
+                        <li class="nav-item py-2 py-sm-0">
+                            <a href="#" class="nav-link text-white">
+                                <i class="fs-5 fa fa-gauge"></i><span class="fs-4 ms-3 d-none d-sm-inline">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item py-2 py-sm-0">
+                            <a href="/" class="nav-link text-white">
+                                <i class="fs-5 fa fa-house"></i><span class="fs-4 ms-3 d-none d-sm-inline">home</span>
+                            </a>
+                        </li>
+                        <li class="nav-item py-2 py-sm-0">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Region" asp-action="Index">
+                                <i class="fs-5 fa fa-table-list"></i><span class="fs-4 ms-3 d-none d-sm-inline">Области</span>
+                            </a>
+                        </li>
+                        <li class="nav-item py-2 py-sm-0">
+                            <a class="nav-link text-white" asp-area="" asp-controller="CitizenShip" asp-action="Index">
+                                <i class="fs-5 fa fa-table-list"></i><span class="fs-4 ms-3 d-none d-sm-inline">Гражданство</span>
+                            </a>
+                        </li>
+                        <li class="nav-item py-2 py-sm-0">
+                            <a class="nav-link text-white" asp-area="" asp-controller="TicketType" asp-action="Index">
+                                <i class="fs-5 fa fa-table-list"></i><span class="fs-4 ms-3 d-none d-sm-inline">Виды Билетов</span>
+                            </a>
+                        </li>
+                        <li class="nav-item py-2 py-sm-0">
+                            <a class="nav-link text-white" asp-area="" asp-controller="WaterBody" asp-action="Index">
+                                <i class="fs-5 fa fa-table-list"></i><span class="fs-4 ms-3 d-none d-sm-inline">Водоёмы</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="container col-auto col-md-8">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - Ticket - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
