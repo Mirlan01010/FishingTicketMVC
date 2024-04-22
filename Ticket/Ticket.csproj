@@ -20,10 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\TestFishingTicket\BLL\BLL.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Update="Views\TicketType\Delete.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
@@ -73,6 +69,10 @@
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Views\WaterBody\Edit.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BLL\BLL.csproj" />
   </ItemGroup>
 
 </Project>

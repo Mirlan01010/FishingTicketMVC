@@ -40,17 +40,40 @@
                             <a asp-action="Index" class="btn btn-info w-100"><i class="fa-solid fa-right-from-bracket"></i>Back</a>
                         </div>
                         
-                        @if (Model.IsActive == true)
+                        @if (Model.Region.IsActive == false)
                         {
-                            <div class="col">
-                                <input type="submit" class="btn btn-danger w-100" value="Отключить" />
-                            </div>
+                           
+                            if (Model.IsActive == false)
+                            {
+                                <div class="col">
+                                    <input type="submit" class="btn btn-success w-100" value="Активировать" disabled />
+                                    <span class="text-danger"> Сначала активируйте Область!!!</span>
+
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col">
+                                    <input type="submit" class="btn btn-danger w-100" value="Отключить" disabled />
+                                    <span class="text-danger"> Сначала активируйте Область!!!</span>
+                                </div>
+                            }
                         }
                         else
                         {
-                            <div class="col">
-                                <input type="submit" class="btn btn-success w-100" value="Активировать" />
-                            </div>
+                            if (Model.IsActive == false)
+                            {
+                                <div class="col">
+                                    <input type="submit" class="btn btn-success w-100" value="Активировать"  />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col">
+                                    <input type="submit" class="btn btn-danger w-100" value="Отключить"  />
+                                </div>
+                            }
+
                         }
                     </div>
                 </div>
