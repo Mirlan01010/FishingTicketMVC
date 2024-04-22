@@ -3286,13 +3286,13 @@
     },
     "BLL/1.0.0": {
       "type": "project",
-      "path": "../../TestFishingTicket/BLL/BLL.csproj",
-      "msbuildProject": "../../TestFishingTicket/BLL/BLL.csproj"
+      "path": "../BLL/BLL.csproj",
+      "msbuildProject": "../BLL/BLL.csproj"
     },
     "DAL/1.0.0": {
       "type": "project",
-      "path": "../../TestFishingTicket/DAL/DAL.csproj",
-      "msbuildProject": "../../TestFishingTicket/DAL/DAL.csproj"
+      "path": "../DAL/DAL.csproj",
+      "msbuildProject": "../DAL/DAL.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -3340,8 +3340,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\Project\\TestFishingTicket\\BLL\\BLL.csproj": {
-              "projectPath": "D:\\Project\\TestFishingTicket\\BLL\\BLL.csproj"
+            "D:\\Project\\Ticket\\BLL\\BLL.csproj": {
+              "projectPath": "D:\\Project\\Ticket\\BLL\\BLL.csproj"
             }
           }
         }

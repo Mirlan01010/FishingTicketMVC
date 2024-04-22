@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "DtMkuKJz3wYrn4gwgy8SMMBwWXBqmE3FhBEejy7ExxZMduf3uxS8IFWp1KS791ZocwxFVkyAs70XGmMJmLwQWg==",
+  "dgSpecHash": "6Q6dWzmtT4Mdu0NTpmKphsKCuhpCuVEEmHDF9ZYsQ7USXpCnuguudUR90y6S+mfx5AvKmUtF3ke9HhvDG3vJ5g==",
   "success": true,
-  "projectFilePath": "D:\\Project\\TestFishingTicket\\BLL\\BLL.csproj",
+  "projectFilePath": "D:\\Project\\Ticket\\BLL\\BLL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\promi\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\promi\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\8.0.4\\microsoft.aspnetcore.authentication.jwtbearer.8.0.4.nupkg.sha512",

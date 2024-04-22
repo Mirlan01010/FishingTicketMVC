@@ -126,3 +126,4 @@ D:\Project\Ticket\Ticket\obj\Debug\net8.0\refint\Ticket.dll
 D:\Project\Ticket\Ticket\obj\Debug\net8.0\Ticket.pdb
 D:\Project\Ticket\Ticket\obj\Debug\net8.0\Ticket.genruntimeconfig.cache
 D:\Project\Ticket\Ticket\obj\Debug\net8.0\ref\Ticket.dll
+D:\Project\Ticket\Ticket\obj\Debug\net8.0\Ticket.sourcelink.json

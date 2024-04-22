@@ -20,6 +20,7 @@ namespace Ticket.Controllers
             objList = await _service.GetAllWaterBody();
             return View(objList);
         }
+        
         public async Task<IActionResult> Create()
         {
             var regobj = await _regionService.GetAllRegion();

@@ -9,7 +9,7 @@ namespace Ticket.Controllers
     public class RegionController : Controller
     {
         private readonly IRegionService _service;
-        public RegionController(IRegionService service)
+        public RegionController(IRegionService service )
         {
             _service = service;
         }
@@ -59,10 +59,12 @@ namespace Ticket.Controllers
             if (obj.IsActive == true)
             {
                 obj.IsActive = false;
+                
             }
             else
             {
                 obj.IsActive = true;
+                
             }
             await _service.UpdateRegion(obj);
            
