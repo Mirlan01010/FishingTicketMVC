@@ -16,24 +16,8 @@ namespace Ticket.Controllers.ApiControllers
             _authService = authService;
         }
 
-        [HttpPost("Register")]
-        public async Task<IActionResult> RegisterUser(LoginRequest user)
-        {
-            if (await _authService.RegisterUser(user))
-            {
-                return Ok("Successfully done");
-            }
-            return BadRequest("Something went wrong");
-        }
-        [HttpPost("CreateRole")]
-        public async Task<IActionResult> CreateRole(string Role)
-        {
-            if (await _authService.CreateRole(Role))
-            {
-                return Ok("Successfully done");
-            }
-            return BadRequest("Something went wrong");
-        }
+        
+       
 
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginModel user)

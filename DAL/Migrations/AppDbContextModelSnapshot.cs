@@ -61,6 +61,76 @@ namespace DAL.Migrations
                     b.ToTable("Regions");
                 });
 
+            modelBuilder.Entity("DAL.Entities.Restrict", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("RestrictedCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TicketTypeId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("WaterBodyId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TicketTypeId");
+
+                    b.HasIndex("WaterBodyId");
+
+                    b.ToTable("Restricts");
+                });
+
+            modelBuilder.Entity("DAL.Entities.Statistics.ForDay", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("Created")
+                        .HasColumnType("date");
+
+                    b.Property<int>("TotalCount")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ForDays");
+                });
+
+            modelBuilder.Entity("DAL.Entities.Statistics.ForMonth", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("Created")
+                        .HasColumnType("date");
+
+                    b.Property<int>("TotalCount")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ForMonths");
+                });
+
             modelBuilder.Entity("DAL.Entities.Ticket", b =>
                 {
                     b.Property<int>("Id")
@@ -71,6 +141,9 @@ namespace DAL.Migrations
 
                     b.Property<int>("CitizenShipId")
                         .HasColumnType("integer");
+
+                    b.Property<DateOnly>("CreatedDate")
+                        .HasColumnType("date");
 
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("timestamp with time zone");
@@ -380,6 +453,25 @@ namespace DAL.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasDiscriminator().HasValue("ExtendedIdentityUser");
+                });
+
+            modelBuilder.Entity("DAL.Entities.Restrict", b =>
+                {
+                    b.HasOne("DAL.Entities.TicketType", "TicketTypeI")
+                        .WithMany()
+                        .HasForeignKey("TicketTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DAL.Entities.WaterBody", "WaterBodyI")
+                        .WithMany()
+                        .HasForeignKey("WaterBodyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TicketTypeI");
+
+                    b.Navigation("WaterBodyI");
                 });
 
             modelBuilder.Entity("DAL.Entities.Ticket", b =>

@@ -1,10 +1,12 @@
 ﻿using BLL.Models.WaterBodyModels;
 using BLL.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Ticket.Controllers
 {
+    [Authorize(Roles = ("Admin"))]
     public class WaterBodyController : Controller
     {
         private readonly IWaterBodyService _service;

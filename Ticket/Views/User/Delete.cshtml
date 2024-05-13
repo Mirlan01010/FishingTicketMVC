@@ -1,0 +1,55 @@
+﻿@model BLL.Models.AuthModels.ExtendedUserModel
+
+<form method="post" asp-action="DeletePost">
+    <input asp-for="Id" hidden />
+
+    <div class="border p-3">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group row">
+            <h2 class="text-info pb-3">Добавить Область</h2>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row pt-3">
+                    <div class="col-4">
+                        <label asp-for="@Model.UserName">Имя пользователя</label>
+
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="@Model.UserName" class="form-control" />
+                        <span asp-validation-for="@Model.UserName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row pt-3">
+                    <div class="col-4">
+                        <label asp-for="@Model.Email">Email</label>
+
+                    </div>
+                    <div class="col-8">
+                        <input type="email" asp-for="@Model.Email" class="form-control" />
+                        <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row pt-3">
+                    <div class="col-8 offset-4 row">
+
+                        <div class="col">
+                            <input type="submit" class="btn btn-danger w-100" value="Удалить" />
+                        </div>
+                        <div class="col">
+                            <a asp-action="Index" class="btn btn-info w-100"><i class="fa-solid fa-right-from-bracket"></i>Назад</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                @* Keep this empty *@
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

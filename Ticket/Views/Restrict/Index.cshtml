@@ -1,0 +1,144 @@
+﻿
+<div class="container p-3">
+    <div class="row p-t">
+        <div class="col-6">
+            <h2 class="text-primary">Список Ограничении</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Restrict" asp-action="Create" class="btn btn-primary">
+                <i class="fa-solid fa-plus"></i> &nbsp; Добавить новое ограничение
+            </a>
+
+        </div>
+    </div>
+    <br /><br />
+
+    <div>
+        <select class="form-select" id="yourFilterSelectId" data-live-search="true">
+        </select>
+
+    </div>
+        <table class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th style="font-weight: bold;">
+                        Водоём
+                    </th>
+                    <th style="text-align:center;">
+                        Вид билета
+                    </th>
+                    <th style="text-align:center;">
+                        Ограничение
+                    </th>
+                    <th style="text-align:center;">
+                        Действие
+                    </th>
+                </tr>
+            </thead>
+        <tbody id="table">
+
+        </tbody>
+        </table>
+   
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        // AJAX-запрос для получения данных для заполнения select
+        $.ajax({
+            url: '/Restrict/GetSelectData',
+            type: 'GET',
+            success: function (data) {
+                // Очистка существующих элементов в select
+                $('#yourFilterSelectId').empty();
+                $('#yourFilterSelectId').append($('<option>').text('Все').attr('value', 0));
+                // Добавление новых элементов в select на основе полученных данных
+                $.each(data, function (index, item) {
+                    $('#yourFilterSelectId').append($('<option>').text(item.name).attr('value', item.id));
+                });
+                $('#yourFilterSelectId').trigger('change');
+                // Инициализация Select2 с поиском
+                //$('#yourFilterSelectId').select2();
+            }
+        });
+        $('#yourFilterSelectId').change(function () {
+            var selectedId = $(this).val(); // Получение выбранного ID
+
+            // Если выбран элемент "All", пропустить выполнение запроса
+            if (selectedId === '0') {
+                $.ajax({
+                    url: '/Restrict/GetAllRestricts',
+                    type: 'GET', // Используем метод GET
+                    success: function (all) {
+                        console.log(all);
+                        var html = '';
+                        $.each(all, function (index, obj) {
+                            html += '<tr>'; // Начало новой строки таблицы
+                            html += '<td width="33%">' + obj.waterBodyI.name + '</td>';
+                            html += '<td width="33%">' + obj.ticketTypeI.name + '</td>';
+                            html += '<td width="34%">' + obj.restrictedCount + '</td>';
+                            html += '<td class="text-center">';
+                            html += '<div class="d-flex flex-row align-items-center w-75 btn-group" role="group">';
+                            html += '<a href="/Restrict/Edit/' + obj.id + '" class="btn btn-primary mx-2">';
+                            html += '<i class="fa-solid fa-pen-to-square"></i>';
+                            html += '</a>';
+                            html += '<a href="/Restrict/Delete/' + obj.id + '" class="btn btn-danger mx-2">';
+                            html += '<i class="fa-solid fa-trash"></i>';
+                            html += '</a>';
+                            html += '<a href="/Restrict/Active/' + obj.id + '" class="btn btn-secondary mx-2">';
+                            html += '<i class="fa-solid fa-font"></i>';
+                            html += '</a>';
+                            html += '</div>';
+                            html += '</td>';
+                            html += '</tr>'; // Закрытие строки таблицы
+                        });
+                        html += '';
+                        $('#table').html(html);
+                    }
+                });
+            }
+            else {
+                // Выполнение запроса AJAX для поиска объекта по его ID
+                $.ajax({
+                    url: '/Restrict/FindDataById?id=' + selectedId, // Добавляем id как параметр запроса
+                    type: 'GET', // Используем метод GET
+                    success: function (foundObjects) {
+                        console.log(foundObjects);
+                        // Обновление отображаемых данных на основе найденных объектов
+                        var html = '';
+                        $.each(foundObjects, function (index, obj) {
+                            html += '<tr>'; // Начало новой строки таблицы
+                            html += '<td width="33%">' + obj.waterBodyI.name + '</td>';
+                            html += '<td width="33%">' + obj.ticketTypeI.name + '</td>';
+                            html += '<td width="34%">' + obj.restrictedCount + '</td>';
+                            html += '<td class="text-center">';
+                            html += '<div class=" d-flex flex-row align-items-center w-75 btn-group" role="group">';
+                            html += '<a href="/Restrict/Edit/' + obj.Id + '" class="btn btn-primary mx-2">';
+                            html += '<i class="fa-solid fa-pen-to-square"></i>';
+                            html += '</a>';
+                            html += '<a href="/Restrict/Delete?id=' + obj.Id + '" class="btn btn-danger mx-2">';
+                            html += '<i class="fa-solid fa-trash"></i>';
+                            html += '</a>';
+                            html += '<a href="/Restrict/Active/' + obj.Id + '" class="btn btn-secondary mx-2">';
+                            html += '<i class="fa-solid fa-font"></i>';
+                            html += '</a>';
+                            html += '</div>';
+                            html += '</td>';
+                            html += '</tr>'; // Закрытие строки таблицы
+                        });
+                        html += '';
+                        $('#table').html(html);
+                    }
+                });
+            }
+            
+
+        });
+        
+    });
+</script>
+

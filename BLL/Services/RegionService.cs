@@ -19,6 +19,7 @@ namespace BLL.Services
         Task<ApiResponse> DeleteRegion(int? id);
         Task<RegionResponse> GetSingleRegion(int? id);
         Task<List<RegionResponse>> GetAllRegion();
+
     }
     public class RegionService:IRegionService
     {
@@ -61,6 +62,7 @@ namespace BLL.Services
             var result = await _context.Regions.ToListAsync();
             return _mapper.Map<List<RegionResponse>>(result);
         }
+        
 
         public async Task<RegionResponse> GetSingleRegion(int? id)
         {
