@@ -6,18 +6,29 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 using Ticket.MiddleWares;
 
+Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 // Register the Swagger generator
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(
+    u =>
+    {
+        u.EnableAnnotations();
+        u.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger", Version = "v1", Description = ".Net core api" });
+        u.OperationFilter<SecurityRequirementsOperationFilter>();
+
+    });
 builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddIdentity<ExtendedIdentityUser, IdentityRole>(options =>
 {
     options.Password.RequiredLength = 3;
@@ -25,6 +36,7 @@ builder.Services.AddIdentity<ExtendedIdentityUser, IdentityRole>(options =>
     options.Password.RequireUppercase = false;
     options.Password.RequireLowercase = false;
     options.Password.RequireDigit = false;
+    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!";
 }).AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
 builder.Services.AddAuthentication(options =>
@@ -54,6 +66,12 @@ builder.Services.AddScoped<ICitizenShipService, CitizenShipService>();
 builder.Services.AddScoped<ITicketTypeService, TicketTypeService>();
 builder.Services.AddScoped<IWaterBodyService, WaterBodyService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ITicketService, TicketService>();
+builder.Services.AddScoped<IStatisticService, StatisticService>();
+builder.Services.AddScoped<IRestrictService, RestrictService>();
+
+
+
 
 
 
@@ -74,16 +92,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-//app.Use((context, next) =>
-//{
-//    if (context.Request.Path != "/Login")
-//    {
-//        context.Request.Scheme = "https";
-//        context.Response.Redirect("/Login");
-//    }
 
-//    return next();
-//});
 
 app.UseMiddleware<JwtTokenMiddleware>();
 

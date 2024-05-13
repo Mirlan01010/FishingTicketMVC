@@ -1,8 +1,158 @@
-﻿@{
+﻿@model BLL.Models.StatisticModels.Sell;
+@{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="d-flex justify-content-between">
+@*     <canvas id="myChart" style="max-width:400px; max-height:250px;"></canvas>*@ 
+    <canvas id="chart" ></canvas>
 </div>
+<div class="d-flex justify-content-between">
+    <div>
+        <p><h5>Цена проданных билетов</h5></p>
+        @if (Model.ForDay != null || Model.ForMonth != null)
+        {
+            <table class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th style="font-weight: bold;">
+                            Сумма за день
+                        </th>
+                        
+                        <th style="text-align:center;">
+                            Сумма за месяц
+                        </th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        @if (Model.ForDay != null)
+                        {
+                            <td width:50% style="font-weight: normal;">@Model.ForDay.TotalPrice сом</td>
+                        }
+                        else
+                        {
+                            <td width:50% style="font-weight: normal;">0 сом</td>
+
+                        }
+                        @if (Model.ForMonth != null)
+                        {
+                            <td width:50% style="font-weight: normal;">@Model.ForMonth.TotalPrice сом</td>
+                        }
+                        else
+                        {
+                            <td width:50% style="font-weight: normal;">0 сом</td>
+
+                        }
+                    </tr>
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>Список областей пуст!</p>
+        }
+    </div>
+    <div>
+        <p>Количество проданных билетов</p>
+
+        @if (Model.ForDay != null || Model.ForMonth != null)
+        {
+            <table class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        
+                        <th style="text-align:center;">
+                            Количество за день
+                        </th>
+                        
+                        <th style="text-align:center;">
+                            Количество за месяц
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        @if (Model.ForDay != null)
+                        {
+                            <td width:30% style="">@Model.ForDay.TotalCount</td>
+                        }
+                        else
+                        {
+                            <td width:30% style="">0</td>
+
+                        }
+                        @if (Model.ForMonth != null)
+                        {
+                            <td width:30% style="">@Model.ForMonth.TotalCount</td>
+                        }
+                        else
+                        {
+                            <td width:30% style="">@Model.ForMonth.TotalCount</td>
+
+                        }
+                    </tr>
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>Список областей пуст!</p>
+        }
+    </div>
+    <div>
+        <a  asp-area="" asp-controller="Home" asp-action="Type">
+            <i class="fs-5 fa fa-table-list"></i><span class="fs-4 ms-3 d-none d-sm-inline">Статистика о типах билета</span>
+        </a>
+    </div>
+    
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange','black'],
+        datasets: [{
+            backgroundColor: ["red", "green", "blue", "orange", "brown", "purple","black"],
+          label: '# of Votes',
+          data: [12, 19, 3, 5, 2, 3, 25],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+    const ctx1 = document.getElementById('chart');
+
+    new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                backgroundColor: ["red", "green", "blue", "orange", "brown", "purple"],
+                label: 'Проданные билеты за день',
+                data: [12, 19, 3, 5, 2, 3],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+</script>
+

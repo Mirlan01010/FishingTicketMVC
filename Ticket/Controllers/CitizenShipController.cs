@@ -1,9 +1,11 @@
 ﻿using BLL.Models.CitizenShipModels;
 using BLL.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ticket.Controllers
 {
+    [Authorize(Roles = ("Admin"))]
     public class CitizenShipController : Controller
     {
         private readonly ICitizenShipService _service;

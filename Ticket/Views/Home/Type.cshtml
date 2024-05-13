@@ -1,0 +1,112 @@
+﻿@model BLL.Models.StatisticModels.DateInterval
+<div class="container-md" style="margin-top:30px;">
+    <form method="post" action="/Home/DownloadPdf">
+        <div class="">
+            <div style="margin-top:15px">
+                <label for="startDate">Начальная дата:</label>
+                <input asp-for="@Model.Start" type="date" id="startDate">
+            </div>
+            <div style="margin-top:15px">
+                <label for="endDate">Конечная  дата: </label>
+                <input asp-for="@Model.End" type="date" id="endDate">
+            </div>
+            <div style="margin-top:15px">
+                <button type="submit" >Скачать PDF</button>
+                <button type="button" onclick="getData()" style="margin-left:50px">Получить</button>
+            </div>
+        </div>
+        
+        
+    </form>
+
+
+
+
+    <div class="">
+        <div>
+            <h5 style="text-align:center;">Статистика по видам билетов</h5>
+
+
+            <table class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th style="font-weight: bold;">
+                            Виды билета
+                        </th>
+
+                        <th style="text-align:center;">
+                            Количество проданных билетов
+                        </th>
+                        <th>
+                            Cумма цен проданных Билетов
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody id="TicketTypeSellList">
+                </tbody>
+            </table>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    function getData() {
+        var startDate = document.getElementById("startDate").value;
+        var endDate = document.getElementById("endDate").value;
+
+
+        if (startDate && endDate) {
+            var dateInterval = {
+                start: startDate,
+                end: endDate
+            };
+
+            $.ajax({
+                url: "/Home/Analize",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(dateInterval),
+                success: function (obj) {
+                    // Обработка успешного ответа от сервера
+                    console.log(obj);
+                    drawTableTicketType(obj.typeSellsList);
+                    // Обработка полученных данных response
+                },
+                error: function (xhr, status, error) {
+                    // Обработка ошибки
+                    console.error("Ошибка при получении: " + error);
+                }
+            });
+        } else {
+            // Если значения не выбраны, показать сообщение об ошибке или предупреждение
+            alert("Пожалуйста, выберите начальную и конечную дату.");
+        }
+    }
+    function drawTableTicketType(all) {
+        var totalCountSum = 0; // Переменная для хранения суммы TotalCount
+        var totalPriceSum = 0;
+        var html = '';
+        $.each(all, function (index, obj) {
+            html += '<tr>'; // Начало новой строки таблицы
+            html += '<td width="33%">' + obj.name + '</td>';
+            html += '<td width="33%">' + obj.totalCount + '</td>';
+            html += '<td width="34%">' + obj.totalPrice + ' сом</td>';
+
+            html += '</tr>'; // Закрытие строки таблицы
+            totalCountSum += obj.totalCount;
+            totalPriceSum += obj.totalPrice;
+        });
+        html += '<tr>';
+        html += '<td width="33%">Итоги</td>';
+        html += '<td width="33%">' + totalCountSum + '</td>';
+        html += '<td width="34%">' + totalPriceSum + ' сом</td>';
+        html += '</tr>';
+        $('#TicketTypeSellList').html(html);
+    }
+
+</script>

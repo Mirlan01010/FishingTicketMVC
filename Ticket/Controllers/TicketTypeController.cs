@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Ticket.Controllers
 {
-    [Authorize(Roles =("User"))]
+    [Authorize(Roles = ("Admin"))]
     public class TicketTypeController : Controller
     {
         private readonly ITicketTypeService _service;

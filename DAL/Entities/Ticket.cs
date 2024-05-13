@@ -16,7 +16,9 @@ namespace DAL.Entities
         public string? MiddleName { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public bool IsActive { get; set; }
+        public DateOnly CreatedDate { get; set; }= new DateOnly(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day);
+
+        public bool IsActive { get; set; } = true;
         [ForeignKey("RegionId")]
         public int RegionId { get; set; }
         public virtual Region? Region { get; set; }

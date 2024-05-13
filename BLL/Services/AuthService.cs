@@ -1,4 +1,6 @@
-﻿using BLL.Models.AuthModels;
+﻿using AutoMapper;
+using BLL.Models.AuthModels;
+using BLL.Models.Responses;
 using DAL.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -18,21 +20,27 @@ namespace BLL.Services
     {
         Task<LoginResponse> Login(LoginModel user);
         Task<LoginResponse> RefreshToken(RefreshTokenModel model);
-        Task<bool> RegisterUser(LoginRequest user);
+        Task<ApiResponse> DeleteUser(string userId);
+        Task<bool> RegisterUser(RegisterUser user);
         Task<bool> CreateRole(string role);
         Task<IdentityRole> GetRoleByName(string roleName);
+        Task<ExtendedUserModel> GetUserById(string userId);
+        Task<List<ExtendedUserModel>> GetUsersByRole(string roleName);
+
     }
     public class AuthService : IAuthService
     {
         private readonly UserManager<ExtendedIdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _config;
+        private readonly IMapper _mapper;
 
-        public AuthService(UserManager<ExtendedIdentityUser> userManager, IConfiguration config, RoleManager<IdentityRole> roleManager)
+        public AuthService(IMapper mapper,UserManager<ExtendedIdentityUser> userManager, IConfiguration config, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _config = config;
             _roleManager = roleManager;
+            _mapper = mapper;
         }
         public async Task<bool> CreateRole(string role)
         {
@@ -42,10 +50,47 @@ namespace BLL.Services
             return result.Succeeded;
         }
 
+        public async Task<ApiResponse> DeleteUser(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                 return new ApiResponse() { Message = "User successfully deleted!" };
+            }
+            else
+            {
+                return new ApiResponse() { Message = "Error occured....", Success = false };
+            }
+        }
+
         public async Task<IdentityRole> GetRoleByName(string roleName)
         {
             var role = await _roleManager.FindByNameAsync(roleName);
             return role;
+        }
+
+        public async Task<ExtendedUserModel> GetUserById(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            
+            return _mapper.Map<ExtendedUserModel>(user);
+        }
+
+        public async Task<List<ExtendedUserModel>> GetUsersByRole(string roleName)
+        {
+            if(roleName == "Admin")
+            {
+                var usersInAdminRole = await _userManager.GetUsersInRoleAsync("Admin");
+                return _mapper.Map<List<ExtendedUserModel>>(usersInAdminRole);
+            }
+            else
+            {
+                var usersInAdminRole = await _userManager.GetUsersInRoleAsync("User");
+                return _mapper.Map<List<ExtendedUserModel>>(usersInAdminRole);
+            }
+            
         }
 
         public async Task<LoginResponse> Login(LoginModel user)
@@ -90,13 +135,13 @@ namespace BLL.Services
             response.RefreshToken = model.RefreshToken;
 
             identityUser.RefreshToken = response.RefreshToken;
-            identityUser.RefreshTokenExpiry = DateTime.Now.AddHours(12);
+            identityUser.RefreshTokenExpiry = DateTime.Now.AddHours(12).ToUniversalTime();
             await _userManager.UpdateAsync(identityUser);
 
             return response;
         }
 
-        public async Task<bool> RegisterUser(LoginRequest user)
+        public async Task<bool> RegisterUser(RegisterUser user)
         {
             var identityUser = new ExtendedIdentityUser
             {
@@ -105,10 +150,11 @@ namespace BLL.Services
             };
 
             var result = await _userManager.CreateAsync(identityUser, user.Password);
-            var role = await GetRoleByName("User");
+            var role = await GetRoleByName(user.Role);
             await _userManager.AddToRoleAsync(identityUser, role.Name!);
             return result.Succeeded;
         }
+        
         //HELPER METHODS
         private string GenerateRefreshTokenString()
         {

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using BLL.Models.AuthModels;
 using BLL.Models.CitizenShipModels;
 using BLL.Models.RegionModels;
+using BLL.Models.RestrictModels;
 using BLL.Models.TicketModels;
 using BLL.Models.TicketTypeModels;
 using BLL.Models.WaterBodyModels;
@@ -31,6 +33,10 @@ namespace BLL.Mapping
 
             CreateMap<TicketRequest, Ticket>();
             CreateMap<Ticket, TicketResponse>();
+            CreateMap<RestrictRequest, Restrict>();
+            CreateMap<Restrict, RestrictResponse>();
+
+            CreateMap<ExtendedIdentityUser, ExtendedUserModel>();
 
         }
     }

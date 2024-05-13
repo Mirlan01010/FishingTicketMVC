@@ -20,6 +20,8 @@ namespace BLL.Services
 
         Task<ApiResponse> DeleteTicket(int id);
         Task<TicketResponse> GetSingleTicket(int id);
+        Task<List<TicketResponse>> GetAllTicketByWaterBodyId(int id);
+
         Task<List<TicketResponse>> GetAllTicket();
     }
     public class TicketService : ITicketService
@@ -27,12 +29,14 @@ namespace BLL.Services
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
         private readonly UserManager<ExtendedIdentityUser> _userManager;
+        private readonly IStatisticService _statisticService;
 
-        public TicketService(AppDbContext context, IMapper mapper, UserManager<ExtendedIdentityUser> userManager)
+        public TicketService(AppDbContext context, IMapper mapper, UserManager<ExtendedIdentityUser> userManager, IStatisticService statisticService)
         {
             _context = context;
             _mapper = mapper;
             _userManager = userManager;
+            _statisticService = statisticService;
         }
 
         public async Task<ApiResponse> CreateTicket(TicketRequest model,string userId)
@@ -46,11 +50,18 @@ namespace BLL.Services
             //    return new ApiResponse() { Message = "Ticket added allready", Success = false };
             //}
             var result = _mapper.Map<Ticket>(model);
+
+            var price = await _context.TicketTypes.FirstOrDefaultAsync(t => t.Id==result.TicketTypeId);
+            if (price != null)
+            {
+                await _statisticService.CreateForDay(price.Price);
+            }
             result.StartTime=result.StartTime.ToUniversalTime();
             result.EndTime=result.EndTime.ToUniversalTime();
             result.UserId=userId;
             _context.Tickets.Add(result);
             await _context.SaveChangesAsync();
+
             return new ApiResponse() { Message = "Ticket successfully added :)" };
         }
 
@@ -85,6 +96,12 @@ namespace BLL.Services
                 return tickets;
             }
             return tickets;
+        }
+
+        public async Task<List<TicketResponse>> GetAllTicketByWaterBodyId(int id)
+        {
+            var result = await _context.Tickets.Where(u=>u.WaterBodyId==id).ToListAsync();
+            return _mapper.Map<List<TicketResponse>>(result);
         }
 
         public async Task<TicketResponse> GetSingleTicket(int id)
